@@ -1,3 +1,4 @@
+import * as utils from 'util';
 import {
   Controller,
   Get,
@@ -30,10 +31,7 @@ export class WebhookController {
 
   @Post()
   handleMessage(@Body() body: any, @Res() res: Response) {
-    console.log('Webhook event:', body);
-
-    // Process the webhook event
-    // Add your logic here
+    console.log(`Webhook event: ${utils.inspect(body)}`);
 
     res.status(HttpStatus.OK).send('EVENT_RECEIVED');
   }

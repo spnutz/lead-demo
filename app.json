@@ -1,0 +1,11 @@
+{
+    "name": "lead-demo",
+    "scripts": {},
+    "env": {
+      "FACEBOOK_VERIFY_TOKEN": {
+        "description": "Facebook Verify Token",
+        "value": "xbcd"
+      }
+    }
+  }
+  

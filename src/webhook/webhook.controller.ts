@@ -24,19 +24,27 @@ export class WebhookController {
     switch (source) {
       case 'facebook':
         if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-          console.log('WEBHOOK_VERIFIED');
+          console.log('FACEBOOK VERIFY WEBHOOK');
           return res.status(HttpStatus.OK).send(challenge);
         } else {
           return res.status(HttpStatus.FORBIDDEN).send('Forbidden');
         }
-      case 'titkok':
+      case 'tiktok':
+        console.log('TIKTOK VERIFY WEBHOOK');
         return res.status(HttpStatus.OK).send(challenge);
     }
   }
 
   @Post()
-  handleMessage(@Body() body: any, @Res() res: Response) {
-    console.log('Webhook event:', JSON.stringify(body, null, 2));
+  handleMessage(
+    @Body() body: any,
+    @Query('source') source: string,
+    @Res() res: Response,
+  ) {
+    console.log(
+      `Webhook event from : ${source}`,
+      JSON.stringify(body, null, 2),
+    );
 
     res.status(HttpStatus.OK).send('EVENT_RECEIVED');
   }

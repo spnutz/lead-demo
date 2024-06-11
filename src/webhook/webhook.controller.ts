@@ -16,15 +16,21 @@ export class WebhookController {
     @Query('hub.mode') mode: string,
     @Query('hub.verify_token') token: string,
     @Query('hub.challenge') challenge: string,
+    @Query('source') source: string,
     @Res() res: Response,
   ) {
     const VERIFY_TOKEN = process.env.FACEBOOK_VERIFY_TOKEN;
 
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-      console.log('WEBHOOK_VERIFIED');
-      return res.status(HttpStatus.OK).send(challenge);
-    } else {
-      return res.status(HttpStatus.FORBIDDEN).send('Forbidden');
+    switch (source) {
+      case 'facebook':
+        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+          console.log('WEBHOOK_VERIFIED');
+          return res.status(HttpStatus.OK).send(challenge);
+        } else {
+          return res.status(HttpStatus.FORBIDDEN).send('Forbidden');
+        }
+      case 'titkok':
+        return res.status(HttpStatus.OK).send(challenge);
     }
   }
 
